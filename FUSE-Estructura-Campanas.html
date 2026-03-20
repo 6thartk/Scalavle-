@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Estructura de Campañas · Fuse Apparel</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #06080f;
+  --surface: #0c0f1a;
+  --surface2: #111520;
+  --border: #1a1f35;
+  --border2: #222840;
+  --green: #00e5a0;
+  --green-dim: rgba(0,229,160,0.09);
+  --gold: #f0c040;
+  --gold-dim: rgba(240,192,64,0.09);
+  --blue: #4d9fff;
+  --blue-dim: rgba(77,159,255,0.09);
+  --red: #ff5c5c;
+  --red-dim: rgba(255,92,92,0.09);
+  --orange: #ff8c42;
+  --orange-dim: rgba(255,140,66,0.09);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.09);
+  --teal: #2dd4bf;
+  --teal-dim: rgba(45,212,191,0.09);
+  --muted: #3a4060;
+  --text: #d8dff0;
+  --text-dim: #5a6080;
+  --text-mid: #8892b0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  font-family: 'Lato', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.4;
+}
+.wrap { position: relative; z-index: 1; max-width: 1380px; margin: 0 auto; padding: 48px 32px 80px; }
+
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6,8,15,0.93); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px; margin: -48px -32px 44px;
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+}
+.nav a { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--text-dim); text-decoration: none; padding: 6px 14px; border-radius: 6px; border: 1px solid transparent; transition: all 0.2s; }
+.nav a:hover { color: var(--orange); border-color: rgba(255,140,66,0.3); }
+.nav-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: var(--orange); margin-right: 12px; }
+
+/* HEADER */
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; line-height: 1.05; color: #fff; margin-bottom: 8px; }
+h1 span { color: var(--orange); }
+.header-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 0.5px; }
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; margin-bottom: 44px; }
+
+/* BUDGET HERO */
+.budget-hero { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 48px; }
+.bh-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+.bh-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; }
+.bh-val { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; line-height: 1; }
+.bh-sub { font-size: 12px; color: var(--text-mid); margin-top: 6px; }
+
+/* SECTION */
+.section { margin-bottom: 52px; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+
+/* CAMPAIGN BLOCKS */
+.block-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  padding: 12px 18px; border-radius: 10px; border: 1px solid;
+}
+.block-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; opacity: 0.3; }
+.block-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; }
+.block-sub { font-size: 12px; margin-top: 2px; }
+
+.camp-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; margin-bottom: 12px;
+}
+.camp-card-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 20px; align-items: start; }
+@media(max-width: 900px) { .camp-card-inner { grid-template-columns: 1fr 1fr; } }
+
+.camp-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 10px; }
+.camp-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.5px; border: 1px solid; }
+.tag-cbo { background: var(--purple-dim); color: var(--purple); border-color: rgba(167,139,250,0.3); }
+.tag-abo { background: var(--blue-dim); color: var(--blue); border-color: rgba(77,159,255,0.3); }
+.tag-adv { background: var(--gold-dim); color: var(--gold); border-color: rgba(240,192,64,0.3); }
+.tag-noadv { background: var(--red-dim); color: var(--red); border-color: rgba(255,92,92,0.3); }
+.tag-leads { background: var(--green-dim); color: var(--green); border-color: rgba(0,229,160,0.3); }
+.tag-sales { background: var(--teal-dim); color: var(--teal); border-color: rgba(45,212,191,0.3); }
+.tag-clicks { background: var(--orange-dim); color: var(--orange); border-color: rgba(255,140,66,0.3); }
+
+.col-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; }
+.col-val { font-size: 13px; line-height: 1.6; color: var(--text-mid); }
+.col-val strong { color: var(--text); display: block; }
+
+.budget-pill {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 14px; text-align: center;
+}
+.bp-day { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; color: var(--orange); }
+.bp-month { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+.bp-pct { font-size: 12px; color: var(--text-mid); margin-top: 6px; }
+
+/* ADSETS */
+.adset { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+.adset-name { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-mid); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.adset-name::before { content: '→'; color: var(--text-dim); }
+.adset-body { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+.adset-budget { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--text); float: right; }
+
+/* DIVIDER */
+.mini-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* AUDIENCE GRID */
+.aud-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+@media(max-width:900px){ .aud-grid { grid-template-columns:1fr 1fr; } }
+.aud-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.aud-id { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+.aud-name { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+.aud-source { font-size: 12px; color: var(--text-dim); margin-bottom: 4px; }
+.aud-window { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 20px; display: inline-block; }
+.aud-use { font-size: 12px; color: var(--text-mid); margin-top: 8px; line-height: 1.5; }
+.priority-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+/* CONTENT TABLE */
+.cont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:900px){ .cont-grid { grid-template-columns:1fr; } }
+.cont-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.cont-obj { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.cont-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+.cont-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; font-size: 13px; }
+.cont-icon { flex-shrink: 0; font-size: 16px; }
+.cont-text { color: var(--text-mid); line-height: 1.55; }
+.cont-text strong { color: var(--text); }
+.format-badge { display: inline-block; background: var(--surface2); border: 1px solid var(--border2); border-radius: 6px; padding: 2px 8px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 10px; }
+
+/* RULES */
+.rule-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; gap: 16px; align-items: flex-start; }
+.rule-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px; color: var(--border2); flex-shrink: 0; line-height: 1; }
+.rule-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+.rule-text { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+
+/* EXCLUSION TABLE */
+.excl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.excl-table th { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+.excl-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.excl-table tr:last-child td { border-bottom: none; }
+.excl-tag { display: inline-block; background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,92,92,0.25); border-radius: 20px; padding: 2px 10px; font-size: 11px; font-family: 'DM Mono', monospace; margin: 2px; }
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item { display: flex; gap: 0; }
+.tl-left { width: 100px; flex-shrink: 0; text-align: right; padding-right: 20px; padding-top: 4px; }
+.tl-day { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); }
+.tl-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.tl-connector { width: 2px; flex: 1; min-height: 24px; }
+.tl-right { flex: 1; padding-left: 20px; padding-bottom: 24px; }
+.tl-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.tl-desc { font-size: 13px; color: var(--text-mid); line-height: 1.55; }
+
+/* WHEN TO CHANGE */
+.change-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.change-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; }
+.change-if { font-size: 13px; flex: 1; }
+.change-arrow { color: var(--text-dim); font-size: 16px; flex-shrink: 0; }
+.change-then { font-size: 13px; flex: 1; }
+
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+@media(max-width:900px){ .grid-2,.grid-3 { grid-template-columns:1fr; } }
+
+/* BADGE */
+.badge { display: inline-block; border-radius: 30px; padding: 7px 16px; font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 1px; }
+.badge-orange { background: var(--orange-dim); border: 1px solid rgba(255,140,66,0.3); color: var(--orange); }
+.badge-green { background: var(--green-dim); border: 1px solid rgba(0,229,160,0.3); color: var(--green); }
+
+/* BLOCK COLORS */
+.block-fria { border-color: rgba(255,92,92,0.2); background: rgba(255,92,92,0.04); }
+.block-fria .block-num,.block-fria .block-title { color: var(--red); }
+.block-fria .block-sub { color: rgba(255,92,92,0.6); }
+
+.block-tibia { border-color: rgba(240,192,64,0.2); background: rgba(240,192,64,0.04); }
+.block-tibia .block-num,.block-tibia .block-title { color: var(--gold); }
+.block-tibia .block-sub { color: rgba(240,192,64,0.6); }
+
+.block-rmkt { border-color: rgba(0,229,160,0.2); background: rgba(0,229,160,0.04); }
+.block-rmkt .block-num,.block-rmkt .block-title { color: var(--green); }
+.block-rmkt .block-sub { color: rgba(0,229,160,0.6); }
+
+.block-test { border-color: rgba(77,159,255,0.2); background: rgba(77,159,255,0.04); }
+.block-test .block-num,.block-test .block-title { color: var(--blue); }
+.block-test .block-sub { color: rgba(77,159,255,0.6); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-brand">FUSE ×</span>
+  <a href="#presupuesto">Presupuesto</a>
+  <a href="#estructura">Estructura</a>
+  <a href="#audiencias">Audiencias</a>
+  <a href="#contenido">Contenido</a>
+  <a href="#exclusiones">Exclusiones</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#reglas">Reglas</a>
+</nav>
+
+<!-- HEADER -->
+<div class="header-top">
+  <div>
+    <div class="eyebrow">Estructura Estratégica · Meta Ads</div>
+    <h1>Fuse <span>Campañas</span></h1>
+    <div class="header-sub">S/2,000 mensuales · 4 bloques · 6 campañas · Lima, Perú · Marzo 2026</div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+    <span class="badge badge-orange">S/66 / día</span>
+    <span class="badge badge-green">6 campañas activas</span>
+  </div>
+</div>
+
+<!-- ═══ PRESUPUESTO HERO ══ -->
+<div id="presupuesto" class="budget-hero">
+  <div class="bh-card" style="border-color:rgba(255,92,92,0.25);background:rgba(255,92,92,0.04);">
+    <div class="bh-label">Bloque 1 · Frío</div>
+    <div class="bh-val" style="color:var(--red);">S/600</div>
+    <div class="bh-sub">S/27/día · 30% · WhatsApp + Perfil</div>
+    <div style="margin-top:12px;background:var(--border);border-radius:4px;height:4px;overflow:hidden;"><div style="width:30%;height:100%;background:var(--red);border-radius:4px;"></div></div>
+  </div>
+  <div class="bh-card" style="border-color:rgba(240,192,64,0.25);background:rgba(240,192,64,0.04);">
+    <div class="bh-label">Bloque 2 · Tibia</div>
+    <div class="bh-val" style="color:var(--gold);">S/300</div>
+    <div class="bh-sub">S/10/día · 15% · WhatsApp IG engagers</div>
+    <div style="margin-top:12px;background:var(--border);border-radius:4px;height:4px;overflow:hidden;"><div style="width:15%;height:100%;background:var(--gold);border-radius:4px;"></div></div>
+  </div>
+  <div class="bh-card" style="border-color:rgba(0,229,160,0.25);background:rgba(0,229,160,0.04);">
+    <div class="bh-label">Bloque 3 · Remarketing</div>
+    <div class="bh-val" style="color:var(--green);">S/660</div>
+    <div class="bh-sub">S/22/día · 33% · WhatsApp + Web ATC</div>
+    <div style="margin-top:12px;background:var(--border);border-radius:4px;height:4px;overflow:hidden;"><div style="width:33%;height:100%;background:var(--green);border-radius:4px;"></div></div>
+  </div>
+  <div class="bh-card" style="border-color:rgba(77,159,255,0.25);background:rgba(77,159,255,0.04);">
+    <div class="bh-label">Bloque 4 · Testeo</div>
+    <div class="bh-val" style="color:var(--blue);">S/210</div>
+    <div class="bh-sub">S/7/día · 10% · Creativos nuevos</div>
+    <div style="margin-top:12px;background:var(--border);border-radius:4px;height:4px;overflow:hidden;"><div style="width:10%;height:100%;background:var(--blue);border-radius:4px;"></div></div>
+  </div>
+</div>
+
+<!-- ═══ ESTRUCTURA DE CAMPAÑAS ══ -->
+<div class="section" id="estructura">
+  <div class="section-label">Estructura de Campañas · 4 Bloques</div>
+
+  <!-- BLOQUE 1 -->
+  <div class="block-header block-fria" style="margin-bottom:14px;">
+    <div class="block-num">01</div>
+    <div>
+      <div class="block-title">Captación Fría</div>
+      <div class="block-sub">Personas que nunca vieron la marca · Descubrimiento</div>
+    </div>
+    <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:13px;color:var(--red);">S/27/día</div>
+  </div>
+
+  <!-- Campaña 1A -->
+  <div class="camp-card" style="border-color:rgba(255,92,92,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">WhatsApp · Prospección Fría</div>
+        <div class="camp-meta">
+          <span class="tag tag-leads">OUTCOME_LEADS</span>
+          <span class="tag tag-cbo">CBO</span>
+          <span class="tag tag-adv">ADV ✓ Activado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set A · Broad 18–34 Lima <span class="adset-budget">S/10/día</span></div>
+          <div class="adset-body">Sin intereses · Sin PP · Excluir PP7 compradores · Excluir 45+<br>Creativo 1: Hook Identidad · Creativo 2: Problema + Solución</div>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set B · Broad 18–44 Lima [TEST 14D] <span class="adset-budget">S/10/día</span></div>
+          <div class="adset-body">Mismo creativo ganador de Ad Set A · Evaluar si 35–44 convierte · Si no → pausar y mover a Bloque 3</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Audiencia</div>
+        <div class="col-val">
+          <strong>Broad 18–34 Lima</strong>
+          Sin intereses ni PP<br>
+          ADV expande solo<br>
+          Excluir PP7 siempre
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Contenido</div>
+        <div class="col-val">
+          <strong>Video 8–12s</strong>
+          Hook 0–3s: producto visible<br>
+          Precio en copy<br>
+          Icebreaker configurado
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/20</div>
+        <div class="bp-month">S/600 / mes</div>
+        <div class="bp-pct">30% del total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaña 1B -->
+  <div class="camp-card" style="border-color:rgba(255,140,66,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">Tráfico al Perfil</div>
+        <div class="camp-meta">
+          <span class="tag tag-clicks">LINK_CLICKS</span>
+          <span class="tag tag-abo">ABO</span>
+          <span class="tag tag-noadv">ADV ✗ Desactivado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set único · Broad 18–34 excl. 45+ <span class="adset-budget">S/7/día</span></div>
+          <div class="adset-body">Solo creativos que YA funcionan · Sin copy de venta · Lifestyle / Outfit reveals · Si en 14 días no suma seguidores → pausar y mover a WhatsApp Tibia</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Audiencia</div>
+        <div class="col-val">
+          <strong>Broad 18–34 Lima</strong>
+          Excluir 45+ obligatorio<br>
+          Excluir PP7 compradores
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Contenido</div>
+        <div class="col-val">
+          <strong>Reel 7–15s</strong>
+          Trending sound<br>
+          Outfit reveal<br>
+          Sin precio ni CTA de venta
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/7</div>
+        <div class="bp-month">S/210 / mes</div>
+        <div class="bp-pct">10% del total</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini-divider"></div>
+
+  <!-- BLOQUE 2 -->
+  <div class="block-header block-tibia" style="margin-bottom:14px;">
+    <div class="block-num">02</div>
+    <div>
+      <div class="block-title">Captación Tibia</div>
+      <div class="block-sub">Ya interactuaron con la marca en IG · Tienen contexto</div>
+    </div>
+    <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);">S/10/día</div>
+  </div>
+
+  <div class="camp-card" style="border-color:rgba(240,192,64,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">WhatsApp · Prospección Tibia</div>
+        <div class="camp-meta">
+          <span class="tag tag-leads">OUTCOME_LEADS</span>
+          <span class="tag tag-abo">ABO</span>
+          <span class="tag tag-noadv">ADV ✗ Desactivado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set único · PP5 + PP6 combinados <span class="adset-budget">S/10/día</span></div>
+          <div class="adset-body">IG engagers 30–60 días · Excluir PP2 · PP3 · PP7 · Audiencia manual estricta<br>Creativo: UGC real o comparativo de valor · Copy más directo que frío</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Audiencia</div>
+        <div class="col-val">
+          <strong>PP5 + PP6</strong>
+          Interactuaron IG 30–60d<br>
+          Excluir PP2+PP3+PP7<br>
+          Segmentación manual
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Contenido</div>
+        <div class="col-val">
+          <strong>Video 10–15s</strong>
+          UGC cliente real<br>
+          Comparativo de valor<br>
+          Precio visible en copy
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/10</div>
+        <div class="bp-month">S/300 / mes</div>
+        <div class="bp-pct">15% del total</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini-divider"></div>
+
+  <!-- BLOQUE 3 -->
+  <div class="block-header block-rmkt" style="margin-bottom:14px;">
+    <div class="block-num">03</div>
+    <div>
+      <div class="block-title">Remarketing</div>
+      <div class="block-sub">Mostraron intención real · Recuperación activa</div>
+    </div>
+    <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:13px;color:var(--green);">S/22/día</div>
+  </div>
+
+  <!-- Campaña 3A -->
+  <div class="camp-card" style="border-color:rgba(0,229,160,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">WhatsApp · Remarketing</div>
+        <div class="camp-meta">
+          <span class="tag tag-leads">OUTCOME_LEADS</span>
+          <span class="tag tag-abo">ABO</span>
+          <span class="tag tag-noadv">ADV ✗ Desactivado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set A · PP4 Video +50% 30d <span class="adset-budget">S/8/día</span></div>
+          <div class="adset-body">Excluir PP2 · PP7 · Copy: urgencia de talla · "¿Aún buscando esto?"</div>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set B · PP1 Web visitors 30d <span class="adset-budget">S/7/día</span></div>
+          <div class="adset-body">Excluir PP2 · PP7 · Copy: resolver objeción · precio de envío visible · garantía de cambio</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Audiencia</div>
+        <div class="col-val">
+          <strong>PP4 · PP1</strong>
+          Video viewers +50%<br>
+          Web visitors 30d<br>
+          NUNCA usar ADV aquí
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Contenido</div>
+        <div class="col-val">
+          <strong>Video 6–8s / Imagen</strong>
+          Producto que vio<br>
+          Urgencia real de talla<br>
+          Objeción resuelta
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/15</div>
+        <div class="bp-month">S/450 / mes</div>
+        <div class="bp-pct">22% del total</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaña 3B -->
+  <div class="camp-card" style="border-color:rgba(45,212,191,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">Web · Remarketing ATC ← PRIORIDAD</div>
+        <div class="camp-meta">
+          <span class="tag tag-sales">OUTCOME_SALES</span>
+          <span class="tag tag-abo">ABO</span>
+          <span class="tag tag-noadv">ADV ✗ Desactivado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name" style="color:var(--red);">Ad Set A · PP3 Checkout sin compra 7d ⚡ MÁS URGENTE <span class="adset-budget">S/4/día</span></div>
+          <div class="adset-body">Los 20 carritos abandonados están aquí · Imagen + "Tu pedido te espera" · Link directo al carrito</div>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Ad Set B · PP2 ATC sin compra 14d <span class="adset-budget">S/3/día</span></div>
+          <div class="adset-body">Producto exacto + "Envío S/24 a Lima" visible + garantía de cambio · No escalar hasta pixel corregido</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Audiencia</div>
+        <div class="col-val">
+          <strong>PP3 · PP2</strong>
+          Checkout abandonado 7d<br>
+          ATC sin compra 14d<br>
+          Excluir PP7 compradores
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Contenido</div>
+        <div class="col-val">
+          <strong>Imagen estática</strong>
+          Producto + costo envío<br>
+          Link directo al carrito<br>
+          Nunca al home
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/7</div>
+        <div class="bp-month">S/210 / mes</div>
+        <div class="bp-pct">11% del total</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mini-divider"></div>
+
+  <!-- BLOQUE 4 -->
+  <div class="block-header block-test" style="margin-bottom:14px;">
+    <div class="block-num">04</div>
+    <div>
+      <div class="block-title">Testeo de Creativos</div>
+      <div class="block-sub">Un test activo a la vez · máximo 7 días · ABO obligatorio</div>
+    </div>
+    <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:13px;color:var(--blue);">S/7/día</div>
+  </div>
+
+  <div class="camp-card" style="border-color:rgba(77,159,255,0.15);">
+    <div class="camp-card-inner">
+      <div>
+        <div class="camp-name">Test Creativos · Rotación Semanal</div>
+        <div class="camp-meta">
+          <span class="tag tag-leads">OUTCOME_LEADS</span>
+          <span class="tag tag-abo">ABO</span>
+          <span class="tag tag-noadv">ADV ✗ Desactivado</span>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Semana 1–2 · UGC cliente real vs. producción</div>
+          <div class="adset-body">Mismo copy · mismo presupuesto · mismo ad set · solo el creativo cambia</div>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Semana 3 · A/B precio visible vs. sin precio</div>
+          <div class="adset-body">Mismo video · copy A con precio S/89 · copy B sin precio · medir tasa de cierre WhatsApp</div>
+        </div>
+        <div class="adset">
+          <div class="adset-name">Semana 4 · LAL compradores 1% (si PP7 &gt; 50 personas)</div>
+          <div class="adset-body">Primera campaña LAL · solo si pixel está corregido</div>
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Regla de testeo</div>
+        <div class="col-val">
+          <strong>7 días máximo</strong>
+          Si supera al ganador → escalar<br>
+          Si no → pausar inmediato<br>
+          Un solo test activo
+        </div>
+      </div>
+      <div>
+        <div class="col-label">Métrica de éxito</div>
+        <div class="col-val">
+          <strong>CPA conversación</strong>
+          Retención video al 50%<br>
+          CTR link<br>
+          No métricas de vanidad
+        </div>
+      </div>
+      <div class="budget-pill">
+        <div class="bp-day">S/7</div>
+        <div class="bp-month">S/210 / mes</div>
+        <div class="bp-pct">10% del total</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ AUDIENCIAS ══ -->
+<div class="section" id="audiencias">
+  <div class="section-label">Públicos a Crear · Orden de Prioridad</div>
+
+  <div style="margin-bottom:20px;">
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;color:var(--red);">Públicos Personalizados · Crear primero</div>
+    <div class="aud-grid">
+
+      <div class="aud-card" style="border-color:rgba(255,92,92,0.3);">
+        <div class="aud-id" style="color:var(--red);">PP3 <span style="background:var(--red-dim);color:var(--red);border:1px solid rgba(255,92,92,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 1</span></div>
+        <div class="aud-name">Checkout sin compra</div>
+        <div class="aud-source">Fuente: Pixel · InitiateCheckout</div>
+        <span class="aud-window" style="background:var(--red-dim);color:var(--red);border:1px solid rgba(255,92,92,0.2);">7 días</span>
+        <div class="aud-use">Los 20 carritos abandonados de esta semana. Audiencia más caliente de toda la cuenta. Lanzar Web Remarketing ATC inmediatamente.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(255,92,92,0.3);">
+        <div class="aud-id" style="color:var(--red);">PP2 <span style="background:var(--red-dim);color:var(--red);border:1px solid rgba(255,92,92,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 1</span></div>
+        <div class="aud-name">ATC sin compra</div>
+        <div class="aud-source">Fuente: Pixel · AddToCart</div>
+        <span class="aud-window" style="background:var(--red-dim);color:var(--red);border:1px solid rgba(255,92,92,0.2);">14 días</span>
+        <div class="aud-use">Agregaron al carrito pero no compraron. Base del remarketing web. Segunda prioridad después de PP3.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(240,192,64,0.3);">
+        <div class="aud-id" style="color:var(--gold);">PP4 <span style="background:var(--gold-dim);color:var(--gold);border:1px solid rgba(240,192,64,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 2</span></div>
+        <div class="aud-name">Video viewers +50%</div>
+        <div class="aud-source">Fuente: Video · IG y FB</div>
+        <span class="aud-window" style="background:var(--gold-dim);color:var(--gold);border:1px solid rgba(240,192,64,0.2);">30 días</span>
+        <div class="aud-use">Vieron más de la mitad del video — tienen interés real. Base del WhatsApp Remarketing Ad Set A.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(240,192,64,0.3);">
+        <div class="aud-id" style="color:var(--gold);">PP5 <span style="background:var(--gold-dim);color:var(--gold);border:1px solid rgba(240,192,64,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 2</span></div>
+        <div class="aud-name">Interactuó IG 30d</div>
+        <div class="aud-source">Fuente: Cuenta IG</div>
+        <span class="aud-window" style="background:var(--gold-dim);color:var(--gold);border:1px solid rgba(240,192,64,0.2);">30 días</span>
+        <div class="aud-use">Likes, comentarios, guardados, DMs. Audiencia tibia con contexto de marca. Usar en Prospección Tibia y WhatsApp Remarketing.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(77,159,255,0.3);">
+        <div class="aud-id" style="color:var(--blue);">PP1 <span style="background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,159,255,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 2</span></div>
+        <div class="aud-name">Web visitors</div>
+        <div class="aud-source">Fuente: Pixel · PageView</div>
+        <span class="aud-window" style="background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,159,255,0.2);">30 días</span>
+        <div class="aud-use">Visitaron la tienda. Incluyendo los que rebotaron sin ATC. Base de WhatsApp Remarketing Ad Set B.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(77,159,255,0.3);">
+        <div class="aud-id" style="color:var(--blue);">PP6 <span style="background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,159,255,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">DÍA 3</span></div>
+        <div class="aud-name">Interactuó IG 60d</div>
+        <div class="aud-source">Fuente: Cuenta IG</div>
+        <span class="aud-window" style="background:var(--blue-dim);color:var(--blue);border:1px solid rgba(77,159,255,0.2);">60 días</span>
+        <div class="aud-use">Amplía PP5. Audiencia más amplia para la Prospección Tibia. Combinar con PP5 en el mismo ad set.</div>
+      </div>
+
+      <div class="aud-card" style="border-color:rgba(167,139,250,0.3);">
+        <div class="aud-id" style="color:var(--purple);">PP7 <span style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(167,139,250,0.3);border-radius:20px;padding:1px 8px;font-size:9px;margin-left:6px;">CUANDO TENGAS &gt;30 PEDIDOS</span></div>
+        <div class="aud-name">Clientes reales</div>
+        <div class="aud-source">Fuente: Lista emails Shopify</div>
+        <span class="aud-window" style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(167,139,250,0.2);">Permanente</span>
+        <div class="aud-use">Exportar emails de pedidos confirmados en Shopify. Usar para: excluir de prospección + base para LAL1 + retargeting de recompra.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;color:var(--purple);">Lookalike Audiences · Crear cuando PP7 tenga +50 personas</div>
+    <div class="grid-3">
+      <div class="aud-card" style="border-color:rgba(167,139,250,0.2);opacity:0.7;">
+        <div class="aud-id" style="color:var(--purple);">LAL1 · Prioridad 1</div>
+        <div class="aud-name">Similares a compradores</div>
+        <div class="aud-source">Base: PP7 emails reales · 1% Lima</div>
+        <div class="aud-use">El LAL más valioso. Solo crear cuando pixel esté corregido y PP7 tenga +50 personas reales. Reemplaza el Broad en prospección fría.</div>
+      </div>
+      <div class="aud-card" style="border-color:rgba(167,139,250,0.2);opacity:0.7;">
+        <div class="aud-id" style="color:var(--purple);">LAL2 · Prioridad 2</div>
+        <div class="aud-name">Similares a video viewers</div>
+        <div class="aud-source">Base: PP4 video +50% · 1% Lima</div>
+        <div class="aud-use">Para escalar prospección cuando LAL1 se sature. Audiencia de calidad basada en engagement real con el contenido.</div>
+      </div>
+      <div class="aud-card" style="border-color:rgba(167,139,250,0.2);opacity:0.7;">
+        <div class="aud-id" style="color:var(--purple);">LAL3 · Prioridad 3</div>
+        <div class="aud-name">Similares a IG engagers</div>
+        <div class="aud-source">Base: PP5 IG 30d · 1% Lima</div>
+        <div class="aud-use">Último recurso de prospección. Útil cuando LAL1 y LAL2 tienen frecuencia alta y el presupuesto escala.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTENIDO ══ -->
+<div class="section" id="contenido">
+  <div class="section-label">Tipo de Contenido por Campaña</div>
+
+  <div class="cont-grid">
+
+    <div class="cont-card" style="border-color:rgba(255,92,92,0.2);">
+      <div class="cont-obj" style="color:var(--red);">Bloque 1A · WhatsApp Frío</div>
+      <div class="cont-title">Captación de nuevos públicos</div>
+      <span class="format-badge">Video 9:16 · 8–12 segundos</span>
+      <div class="cont-item"><div class="cont-icon">⚡</div><div class="cont-text"><strong>Hook 0–3s:</strong> Producto ya visible, sobre persona real, en movimiento. Sin logo, sin texto, sin fondo negro.</div></div>
+      <div class="cont-item"><div class="cont-icon">👗</div><div class="cont-text"><strong>Desarrollo 3–9s:</strong> Outfit completo en uso real. Calle, cuarto, espejo. Nunca maniquí ni fondo de estudio.</div></div>
+      <div class="cont-item"><div class="cont-icon">💬</div><div class="cont-text"><strong>Cierre 9–12s:</strong> Precio en pantalla + CTA. "Jorts desde S/89 · ¿Cuál es tu talla?"</div></div>
+      <div class="cont-item"><div class="cont-icon">✍️</div><div class="cont-text"><strong>Copy:</strong> Precio en línea 1. Zona de envío. Icebreaker pre-configurado en Meta.</div></div>
+    </div>
+
+    <div class="cont-card" style="border-color:rgba(255,140,66,0.2);">
+      <div class="cont-obj" style="color:var(--orange);">Bloque 1B · Tráfico Perfil</div>
+      <div class="cont-title">Awareness y construcción de audiencias</div>
+      <span class="format-badge">Reel 9:16 · 7–15 segundos</span>
+      <div class="cont-item"><div class="cont-icon">🎵</div><div class="cont-text"><strong>Trending sound:</strong> Audio viral de la semana. El algoritmo orgánico también lo distribuye.</div></div>
+      <div class="cont-item"><div class="cont-icon">👀</div><div class="cont-text"><strong>Formato A · Outfit reveal:</strong> Plano pies → sube por el outfit → face reveal. Sin texto.</div></div>
+      <div class="cont-item"><div class="cont-icon">🔄</div><div class="cont-text"><strong>Formato B · Antes/después:</strong> Outfit sin Fuse → corte → outfit con Fuse. 3 segundos cada parte.</div></div>
+      <div class="cont-item"><div class="cont-icon">🚫</div><div class="cont-text"><strong>NO incluir:</strong> Precios, CTAs de compra, texto largo, logo grande. Solo identidad visual.</div></div>
+    </div>
+
+    <div class="cont-card" style="border-color:rgba(240,192,64,0.2);">
+      <div class="cont-obj" style="color:var(--gold);">Bloque 2 · WhatsApp Tibia</div>
+      <div class="cont-title">Audiencia que ya conoce la marca</div>
+      <span class="format-badge">Video 10–15s o UGC</span>
+      <div class="cont-item"><div class="cont-icon">📱</div><div class="cont-text"><strong>UGC real:</strong> Cliente grabando 10–15s usando el producto. Sin guión. Sin producción. Máxima credibilidad.</div></div>
+      <div class="cont-item"><div class="cont-icon">⚖️</div><div class="cont-text"><strong>Comparativo de valor:</strong> "Esto vs. esto · mismo look · S/89 vs S/200." Ancla el precio antes del checkout.</div></div>
+      <div class="cont-item"><div class="cont-icon">✍️</div><div class="cont-text"><strong>Copy más directo:</strong> Ya saben quién sos. Ir al grano. Precio + disponibilidad + CTA.</div></div>
+    </div>
+
+    <div class="cont-card" style="border-color:rgba(0,229,160,0.2);">
+      <div class="cont-obj" style="color:var(--green);">Bloque 3A · WhatsApp Remarketing</div>
+      <div class="cont-title">Recuperar quien no escribió</div>
+      <span class="format-badge">Video 6–8s o Imagen</span>
+      <div class="cont-item"><div class="cont-icon">⏰</div><div class="cont-text"><strong>Urgencia real de talla:</strong> "Solo quedan 3 unidades talla M" — solo si es verdad. Nunca mentir.</div></div>
+      <div class="cont-item"><div class="cont-icon">🎯</div><div class="cont-text"><strong>Producto que vio:</strong> Si interactuó con jorts → mostrar jorts. Si vio shorts → mostrar shorts.</div></div>
+      <div class="cont-item"><div class="cont-icon">💬</div><div class="cont-text"><strong>Copy de recuperación:</strong> "¿Aún buscando esta talla? Quedan pocas · Escríbenos hoy"</div></div>
+    </div>
+
+    <div class="cont-card" style="border-color:rgba(45,212,191,0.2);">
+      <div class="cont-obj" style="color:var(--teal);">Bloque 3B · Web Remarketing ATC</div>
+      <div class="cont-title">Eliminar la fricción que frenó la compra</div>
+      <span class="format-badge">Imagen estática · Simple</span>
+      <div class="cont-item"><div class="cont-icon">📦</div><div class="cont-text"><strong>Resolver objeción de envío:</strong> "Envío a Lima S/24 · Llega en 48h" visible en el creativo.</div></div>
+      <div class="cont-item"><div class="cont-icon">🔄</div><div class="cont-text"><strong>Garantía visible:</strong> "Si no te queda, lo cambiamos." Reduce el miedo a perder el dinero.</div></div>
+      <div class="cont-item"><div class="cont-icon">🛒</div><div class="cont-text"><strong>CTA directo al carrito:</strong> Nunca al home. Link al producto exacto o al carrito abandonado.</div></div>
+      <div class="cont-item"><div class="cont-icon">✍️</div><div class="cont-text"><strong>Copy:</strong> "Dejaste algo en tu carrito. Tu talla sigue disponible → Completar pedido"</div></div>
+    </div>
+
+    <div class="cont-card" style="border-color:rgba(77,159,255,0.2);">
+      <div class="cont-obj" style="color:var(--blue);">Bloque 4 · Testeo</div>
+      <div class="cont-title">Encontrar el próximo creativo ganador</div>
+      <span class="format-badge">Un test activo a la vez · 7 días</span>
+      <div class="cont-item"><div class="cont-icon">🧪</div><div class="cont-text"><strong>Test 1 — UGC vs. producción:</strong> Mismo copy, mismo presupuesto. ¿Cuál tiene mejor retención al 50%?</div></div>
+      <div class="cont-item"><div class="cont-icon">🏷️</div><div class="cont-text"><strong>Test 2 — Precio visible vs. oculto:</strong> ¿El precio en el copy reduce clics pero mejora la tasa de cierre en WhatsApp?</div></div>
+      <div class="cont-item"><div class="cont-icon">🎬</div><div class="cont-text"><strong>Test 3 — Hook producto vs. hook problema:</strong> ¿Arranca mejor con el jort o con "¿Cansada de jorts que no quedan bien?"</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ EXCLUSIONES ══ -->
+<div class="section" id="exclusiones">
+  <div class="section-label">Reglas de Exclusión · Obligatorias</div>
+
+  <div class="grid-2" style="gap:20px;align-items:start;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:0;overflow:hidden;">
+      <table class="excl-table">
+        <thead>
+          <tr>
+            <th>Campaña</th>
+            <th>Excluir siempre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;color:var(--red);">WhatsApp Prospección Fría</td>
+            <td>
+              <span class="excl-tag">PP7 compradores</span>
+              <span class="excl-tag">PP2 ATC</span>
+              <span class="excl-tag">PP3 Checkout</span>
+              <span class="excl-tag">45+</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--orange);">Tráfico Perfil</td>
+            <td>
+              <span class="excl-tag">PP7 compradores</span>
+              <span class="excl-tag">45+</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--gold);">WhatsApp Tibia</td>
+            <td>
+              <span class="excl-tag">PP2 ATC</span>
+              <span class="excl-tag">PP3 Checkout</span>
+              <span class="excl-tag">PP7 compradores</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--green);">WhatsApp Remarketing</td>
+            <td>
+              <span class="excl-tag">PP7 compradores</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--teal);">Web Remarketing ATC</td>
+            <td>
+              <span class="excl-tag">PP7 compradores</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;">Por qué importan las exclusiones</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="padding:12px;background:var(--red-dim);border:1px solid rgba(255,92,92,0.2);border-radius:10px;">
+          <div style="font-size:12px;color:var(--red);font-family:'DM Mono',monospace;margin-bottom:4px;">SIN EXCLUSIONES</div>
+          <div style="font-size:13px;color:var(--text-mid);">Pagás dos veces por el mismo usuario. La prospección compite con el remarketing. Los CPMs suben. El algoritmo se confunde.</div>
+        </div>
+        <div style="padding:12px;background:var(--green-dim);border:1px solid rgba(0,229,160,0.2);border-radius:10px;">
+          <div style="font-size:12px;color:var(--green);font-family:'DM Mono',monospace;margin-bottom:4px;">CON EXCLUSIONES</div>
+          <div style="font-size:13px;color:var(--text-mid);">Cada campaña tiene su propia audiencia. El mensaje es el correcto para cada momento del embudo. El presupuesto no se desperdicia.</div>
+        </div>
+        <div style="padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;">
+          <div style="font-size:12px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:4px;">NUNCA USAR ADV EN REMARKETING</div>
+          <div style="font-size:13px;color:var(--text-mid);">ADV ignora tus exclusiones y expande hacia público frío. Un anuncio de "tu carrito te espera" mostrándose a alguien que nunca visitó la tienda no tiene sentido.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TIMELINE ══ -->
+<div class="section" id="timeline">
+  <div class="section-label">Timeline de Implementación</div>
+
+  <div class="grid-2" style="gap:32px;align-items:start;">
+    <div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 1</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--red);"></div>
+            <div class="tl-connector" style="background:linear-gradient(var(--red),var(--gold));"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--red);">Crear PP2 + PP3 · Lanzar Web ATC Remarketing</div>
+            <div class="tl-desc">Los 20 carritos abandonados están esperando. Esta campaña es la de mayor retorno inmediato. S/7/día.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 2</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--gold);"></div>
+            <div class="tl-connector" style="background:linear-gradient(var(--gold),var(--green));"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--gold);">Crear PP4 + PP5 · Lanzar WhatsApp Remarketing</div>
+            <div class="tl-desc">Ad Set A: video viewers. Ad Set B: web visitors. S/15/día. Configurar icebreaker de WhatsApp en Meta.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 3</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--green);"></div>
+            <div class="tl-connector" style="background:linear-gradient(var(--green),var(--blue));"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--green);">Ajustar WhatsApp Prospección Fría</div>
+            <div class="tl-desc">Quitar PP de Advantage+. Dejar broad puro. Crear PP6. Lanzar Prospección Tibia con PP5+PP6.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Días 4–7</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--text-dim);"></div>
+            <div class="tl-connector" style="background:linear-gradient(var(--text-dim),var(--blue));"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--text-mid);">No tocar nada</div>
+            <div class="tl-desc">Meta necesita tiempo para aprender. Cada edición reinicia la fase de aprendizaje. Revisar métricas solo — no editar.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 7</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--blue);"></div>
+            <div class="tl-connector" style="background:linear-gradient(var(--blue),var(--purple));"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--blue);">Primera evaluación · Lanzar Bloque 4 Testeo</div>
+            <div class="tl-desc">Pausar lo que no genera resultados. Lanzar primer test de creativo UGC vs. producción. Crear PP7 si ya hay +30 pedidos.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 14</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--purple);"></div>
+            <div class="tl-connector" style="background:var(--border);"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--purple);">Evaluar Ad Set B (Broad 18–44)</div>
+            <div class="tl-desc">Si no cierra la brecha con 18–34 → pausar. Si sí funciona → mantener. Revisar si PP7 tiene +50 personas para LAL1.</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-day">Día 30</div></div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:var(--orange);"></div>
+          </div>
+          <div class="tl-right">
+            <div class="tl-title" style="color:var(--orange);">Revisión completa + LAL1</div>
+            <div class="tl-desc">Con 30 días de datos: comparar CPA real WhatsApp vs. Web. Crear LAL1 si pixel está corregido y PP7 &gt; 50 personas. Redistribuir presupuesto según canal ganador.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CUÁNDO CAMBIAR PRESUPUESTO -->
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;">Cuándo cambiar la distribución</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>WhatsApp cierra +20% de conversaciones</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Subir Prospección Fría a S/25/día</div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>Web CVR supera 1%</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Subir Web ATC a S/12/día</div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>Perfil no suma seguidores en 14 días</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Pausar · mover S/7 a WhatsApp Tibia</div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>Test supera al creativo ganador actual</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Pausar el test · escalar en campaña principal</div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>ROAS real Web supera 3× ROAS WhatsApp</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Mover presupuesto de WA a Web ventas</div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-if" style="font-size:12px;"><span style="color:var(--green);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">SI</span>Frecuencia supera 3.0 en 14 días</div>
+          <div class="change-arrow">→</div>
+          <div class="change-then" style="font-size:12px;"><span style="color:var(--orange);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-bottom:3px;">ENTONCES</span>Refrescar creativo o ampliar audiencia</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ REGLAS ══ -->
+<div class="section" id="reglas">
+  <div class="section-label">Reglas de Operación · No Negociables</div>
+
+  <div class="grid-3" style="gap:14px;">
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(255,92,92,0.3);">1</div>
+      <div>
+        <div class="rule-title">Remarketing = ABO siempre. Nunca ADV.</div>
+        <div class="rule-text">Las audiencias custom son pequeñas. ADV las expande hacia frío y el mensaje de recuperación le llega a alguien que nunca te conoció. Presupuesto tirado.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(240,192,64,0.3);">2</div>
+      <div>
+        <div class="rule-title">Sin resultados en 7 días → pausar, no ajustar.</div>
+        <div class="rule-text">Con S/66/día no hay margen para "dejar correr a ver qué pasa." Si en 7 días un ad set no tiene mínimo 3 conversaciones → el presupuesto va a la campaña que sí funciona.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(0,229,160,0.3);">3</div>
+      <div>
+        <div class="rule-title">Remarketing siempre tiene prioridad sobre prospección.</div>
+        <div class="rule-text">Si hay que recortar, recortás prospección fría primero. El remarketing ataca a personas que ya mostraron intención real — mayor probabilidad de retorno inmediato por cada sol gastado.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(77,159,255,0.3);">4</div>
+      <div>
+        <div class="rule-title">No editar campañas en los primeros 7 días.</div>
+        <div class="rule-text">Cada edición reinicia la fase de aprendizaje de Meta. Mínimo 50 eventos de optimización antes de tomar decisiones. Revisá las métricas — no toques la configuración.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(167,139,250,0.3);">5</div>
+      <div>
+        <div class="rule-title">No escalar web hasta que el pixel esté corregido.</div>
+        <div class="rule-text">ROAS de 41–88× es falso. Escalar sobre datos corruptos es optimizar en la dirección equivocada. Corregir el evento Purchase primero, luego escalar.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-num" style="color:rgba(255,140,66,0.3);">6</div>
+      <div>
+        <div class="rule-title">Un solo test activo a la vez en Bloque 4.</div>
+        <div class="rule-text">Si corrés dos tests simultáneos con S/7/día, cada uno tiene S/3.50. No es suficiente para llegar a conclusiones estadísticas. Un test bien hecho vale más que cinco mal hechos.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);">Fuse Apparel Shop · Estructura de Campañas · Marzo 2026</div>
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);">S/2,000 / mes · S/66 / día · 4 bloques · 6 campañas</div>
+</div>
+
+</div>
+</body>
+</html>
